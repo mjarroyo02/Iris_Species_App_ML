@@ -68,14 +68,14 @@ def welcome():
     return 'welcome all'
   
 # defining the function which will make the prediction using  
-# the data which the user inputs 
+# the data which the user inputs    
+    
 def prediction(sepal_length, sepal_width, petal_length, petal_width):   
-   
-    prediction = classifier.predict( 
+    prediction = classifier.predict(
         [[sepal_length, sepal_width, petal_length, petal_width]]) 
     print(prediction) 
-    return prediction 
-      
+    return prediction[0] # Return the actual prediction value
+
   
 # this is the main function in which we define our webpage  
 def main(): 
@@ -85,8 +85,8 @@ def main():
     # here we define some of the front end elements of the web page like  
     # the font and background color, the padding and the text to be displayed 
     html_temp = """ 
-    <div style ="background-color:yellow;padding:13px"> 
-    <h1 style ="color:black;text-align:center;">Streamlit Iris Flower Classifier ML App </h1> 
+    <div style ="background-color:blue;padding:13px"> 
+    <h1 style ="color:white;text-align:center;">Streamlit Iris Flower Classifier ML App </h1> 
     </div> 
     """
       
@@ -101,14 +101,13 @@ def main():
     petal_length = st.text_input("Petal Length", "Type Here") 
     petal_width = st.text_input("Petal Width", "Type Here") 
     result ="" 
-      
+    
     # the below line ensures that when the button called 'Predict' is clicked,  
     # the prediction function defined above is called to make the prediction  
     # and store it in the variable result 
     if st.button("Predict"): 
-        result = prediction(sepal_length, sepal_width, petal_length, petal_width) 
+        result = prediction(float(sepal_length), float(sepal_width), float(petal_length), float(petal_width)) 
     st.success('The output is {}'.format(result)) 
      
 if __name__=='__main__': 
-    main()
-
+    main()   
