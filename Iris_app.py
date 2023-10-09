@@ -63,6 +63,9 @@ from PIL import Image
 # loading in the model to predict on the data 
 pickle_in = open('classifier.pkl', 'rb') 
 classifier = pickle.load(pickle_in) 
+
+species_mapping = {0: 'Iris-setosa', 1: 'Iris-versicolor', 2: 'Iris-virginica'}
+
   
 def welcome(): 
     return 'welcome all'
@@ -70,11 +73,12 @@ def welcome():
 # defining the function which will make the prediction using  
 # the data which the user inputs    
     
+
 def prediction(sepal_length, sepal_width, petal_length, petal_width):   
-    prediction = classifier.predict(
-        [[sepal_length, sepal_width, petal_length, petal_width]]) 
-    print(prediction) 
-    return prediction[0] # Return the actual prediction value
+    prediction = classifier.predict([[sepal_length, sepal_width, petal_length, petal_width]]) 
+    print(prediction)
+    return species_mapping[prediction[0]]  # Return the name of the species
+
 
   
 # this is the main function in which we define our webpage  
@@ -107,7 +111,8 @@ def main():
     # and store it in the variable result 
     if st.button("Predict"): 
         result = prediction(float(sepal_length), float(sepal_width), float(petal_length), float(petal_width)) 
-    st.success('The output is {}'.format(result)) 
+    st.success('The predicted species of the iris flower is: {}'.format(result))
+
      
 if __name__=='__main__': 
     main()   
